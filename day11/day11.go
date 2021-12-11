@@ -30,7 +30,7 @@ func main() {
 
 	var step = 0
 	var p1Sum = 0
-	var p2AllFlash = false // Part 2 we have to print the step in which each enery level flashes
+	var p2AllFlash = false // Part 2 we have to print the step in which each energy level flashes
 	for step < steps || !p2AllFlash {
 		flashMap := make(map[point]int, len(input)*len(input[0]))
 		for key := range energyLevel {
@@ -49,7 +49,7 @@ func main() {
 			}
 			for key, value := range flashMap {
 				if value < 11 {
-					incSurrounding(key, energyLevel) // for each flashMap value increase surrounding
+					incSurrounding(key, energyLevel) // for each flashMap value increase surrounding energy levels
 				}
 				flashMap[key] = 11 // after processing a flash map key once, set a high value to prevent processing again
 			}
@@ -67,7 +67,7 @@ func main() {
 		}
 		if len(flashMap) == len(energyLevel) {
 			p2AllFlash = true
-			fmt.Printf("Part 2: %d", step)
+			fmt.Printf("Part 2: %d\n", step)
 		}
 	}
 }
