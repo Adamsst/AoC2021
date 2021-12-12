@@ -7,6 +7,7 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"unicode"
 )
 
 type sortRuneString []rune
@@ -67,7 +68,7 @@ func SplitStringToIntSlice(input string, separator string) ([]int, error) {
 // SortString is used to sort the character in a string and return the result
 // The following was taken from https://golangbyexample.com/sort-string-golang/
 // This example implements the same interface as the Go library in order to
-// leverage the provided sort function on a rune slice of the input string
+// leverage the provided sort function on a rune slice of the input string.
 func SortString(input string) string {
 	runeArray := []rune(input)
 	sort.Sort(sortRuneString(runeArray))
@@ -109,4 +110,17 @@ func ReverseString(str string) string {
 		result = append(result, strRunes[i])
 	}
 	return string(result)
+}
+
+// StringIsLower will return true when all characters in the provided string are lowercase.
+func StringIsLower(str string) bool {
+	if len(str) == 0 {
+		return false
+	}
+	for i := 0; i < len(str); i++ {
+		if !unicode.IsLower(rune(str[i])) {
+			return false
+		}
+	}
+	return true
 }
