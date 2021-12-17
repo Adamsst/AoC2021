@@ -2,7 +2,9 @@ package helpers
 
 import (
 	"bufio"
+	"errors"
 	"fmt"
+	"math"
 	"os"
 	"sort"
 	"strconv"
@@ -123,4 +125,65 @@ func StringIsLower(str string) bool {
 		}
 	}
 	return true
+}
+
+// GetDecFromBinStr expects the given input string to be binary and will convert it to its
+// decimal respresentation and return the resulting int64. An err is returned on failure.
+func GetDecFromBinStr(str string) (int64, error) {
+	result, err := strconv.ParseInt(str, 2, 64)
+	if err != nil {
+		return 0, err
+	}
+	return result, nil
+}
+
+// GetMaxInt returns the maximum integer value from a slice of ints
+func GetMaxInt(in []int) (int, error) {
+	var max = -1 * math.MaxInt64
+	if len(in) == 0 {
+		return 0, errors.New("GetMaxInt empty slice provided")
+	}
+	for i := 0; i < len(in); i++ {
+		if in[i] > max {
+			max = in[i]
+		}
+	}
+	return max, nil
+}
+
+// GetMinInt returns the minimum integer value from a slice of ints
+func GetMinInt(in []int) (int, error) {
+	var min = math.MaxInt64
+	if len(in) == 0 {
+		return 0, errors.New("GetMinInt empty slice provided")
+	}
+	for i := 0; i < len(in); i++ {
+		if in[i] < min {
+			min = in[i]
+		}
+	}
+	return min, nil
+}
+
+// GetSumInts returns the sum of a slice of ints
+func GetSumInts(in []int) int {
+	var sum = 0
+	for i := 0; i < len(in); i++ {
+		sum += in[i]
+	}
+	return sum
+}
+
+// GetProductInts returns the product of a slice of ints
+// An err is return if the slice is empty
+// The lone value is returned is the slice has a single element
+func GetProductInts(in []int) (int, error) {
+	var product = 1
+	if len(in) < 1 {
+		return 0, errors.New("GetProductInts no elements in provided input")
+	}
+	for i := 0; i < len(in); i++ {
+		product *= in[i]
+	}
+	return product, nil
 }
