@@ -103,22 +103,21 @@ func main() {
 		}
 		valuesToProcess := make([]int, 0)
 		if packets[i].lengthTypeID == "0" { // Process sub packets by length
-			j := i + 1
-			for packets[j].endIndex <= packets[i].endIndex+packets[i].totalLengthSubPackets {
-				if !packets[j].isSubPacket {
-					packets[j].isSubPacket = true
-					valuesToProcess = append(valuesToProcess, packets[j].value)
+			index := i + 1
+			for packets[index].endIndex <= packets[i].endIndex+packets[i].totalLengthSubPackets {
+				if !packets[index].isSubPacket {
+					packets[index].isSubPacket = true
+					valuesToProcess = append(valuesToProcess, packets[index].value)
 				}
-				if packets[j].endIndex == packets[i].endIndex+packets[i].totalLengthSubPackets {
+				if packets[index].endIndex == packets[i].endIndex+packets[i].totalLengthSubPackets {
 					break
 				}
-				j++
+				index++
 			}
 		} else { // Process sub packets by count
-			j := packets[i].numberOfSubPackets
 			k := 0
 			index := 1
-			for k < j {
+			for k < packets[i].numberOfSubPackets {
 				if !packets[i+index].isSubPacket {
 					packets[i+index].isSubPacket = true
 					valuesToProcess = append(valuesToProcess, packets[i+index].value)
